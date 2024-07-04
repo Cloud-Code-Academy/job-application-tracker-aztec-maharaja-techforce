@@ -1,4 +1,9 @@
-public with sharing class JobApplicationTriggerHandler {
+public with sharing class JobApplicationTriggerHandler extends TriggerHandler {
+    public override void beforeInsert() {
+        JobApplTriggerHelper jobApplTrigHelper = new JobApplTriggerHelper();
+        jobApplTrigHelper.setPrimaryContact(Trigger.new);
+    }
+}public with sharing class JobApplicationTriggerHandler {
 
     @AuraEnabled(cacheable=true)
     public static void beforeInsert(List<Job_Application__c> newJobApplications){

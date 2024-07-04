@@ -1,0 +1,37 @@
+<template>
+    <div>
+        <lightning-card title="Jobs Listing">
+            <lightning-button variant="Neutral" label="Applicant Login" title="Applicant Login" slot="actions" onclick={portalLogin} class="slds-var-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Search Jobs" title="Search Jobs" slot="actions" onclick={searchJobs} class="slds-var-m-left_x-small"></lightning-button>
+            <div class="slds-var-p-horizontal_small">
+                <lightning-input 
+                    type="text" 
+                    name="locationName" 
+                    label="Location" 
+                    max-length="30"
+                    onchange={handleChange}>
+                </lightning-input>
+                <template for:each={openJobsList} for:item="jobItem">
+                    <lightning-layout-item key={jobItem.Id} size="3" padding="around-small">
+                        <lightning-card title={jobItem.Name}  icon-name="standard:account">
+                            <lightning-button variant="Neutral" label="Pay Calculator" title="Pay Calculator" value={jobItem.Salary__c} slot="actions" onclick={calculateTakeHomePay} class="slds-var-m-left_x-small"></lightning-button>
+                            <lightning-button variant="Neutral" label="Apply" title="Apply" value={jobItem.Id} slot="actions" onclick={applyJob} class="slds-var-m-left_x-small"></lightning-button>
+                            <div class="slds-var-p-horizontal_small">
+                                <div><span><b>Company : </b></span>{jobItem.Company__r.Name}</div>
+                                <div><span><b>Employment Type : </b></span>{jobItem.Employment_Type__c}</div>
+                                <div><span><b>Location : </b></span>{jobItem.Location__c}</div>
+                                <div><span><b>Salary : </b></span>{jobItem.Salary__c}</div>
+                                <div><span><b>Description : </b></span>{jobItem.Description__c}</div>
+                            </div>
+                        </lightning-card>
+                    </lightning-layout-item>
+                </template>    
+            </div>
+            <div slot="footer">
+                <template lwc:if={searchJobError}>
+                    <div class="error"><span style="color: red;">{JOB_SEARCH_ERROR_MESSAGE}</span></div>
+                </template>
+            </div>
+        </lightning-card>        
+    </div>    
+</template>

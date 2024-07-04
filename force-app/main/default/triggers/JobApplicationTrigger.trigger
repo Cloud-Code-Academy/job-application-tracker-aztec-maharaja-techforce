@@ -1,4 +1,6 @@
-trigger JobApplicationTrigger on Job_Application__c (before insert, before update) {
+trigger JobApplicationTrigger on Job_Application__c (before insert, after insert, before delete, after delete, before update, after update, after undelete) {
+    new JobApplicationTriggerHandler().run();
+}trigger JobApplicationTrigger on Job_Application__c (before insert, before update) {
     switch on Trigger.operationType {
         when  BEFORE_INSERT{
             JobApplicationTriggerHandler.beforeInsert(Trigger.new);

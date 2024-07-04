@@ -1,0 +1,25 @@
+<template>
+    <!-- <lightning-modal-header>Test Modal Header</lightning-modal-header> -->
+    <lightning-modal-body>
+        <lightning-card title="Applicant Login">
+        <div class="slds-var-p-horizontal_small">
+            <lightning-input 
+                type="text" 
+                name="email_id" 
+                label="Login with your Email Id" 
+                max-length="30"
+                onchange={handleChange}>
+            </lightning-input>
+        </div>
+        <div slot="footer">
+            <template lwc:if={applicantErrorMessage}>
+                <div class="error"><span style="color: red;">{APPLICANT_NOT_FOUND_ERROR_MESSAGE}</span></div>
+            </template>
+        </div>
+        </lightning-card>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={closeModal} class="slds-var-p-right_x-small"></lightning-button>
+        <lightning-button label="Login" variant="brand" onclick={handleLogin}></lightning-button>
+    </lightning-modal-footer>
+</template>
