@@ -1,0 +1,8 @@
+<template>
+    <template if:true={showComponent}>
+        <lightning-card  title="Applied">
+            <p class="slds-var-p-horizontal_small slds-align_absolute-center">You applied to this job on<span> </span> <lightning-formatted-date-time value={dateApplied} class="slds-var-p-left_xx-small"></lightning-formatted-date-time></p>
+            <p slot="footer"><lightning-button onclick={handleOnClick} label={name}> Click Me {name}</lightning-button></p>
+        </lightning-card>
+    </template>
+</template>

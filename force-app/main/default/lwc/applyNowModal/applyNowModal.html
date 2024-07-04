@@ -1,0 +1,30 @@
+<template>
+
+    <!-- <lightning-button label="Apply Now" onclick={handleModal}></lightning-button> -->
+
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Save Job</h1>
+            </div>
+            <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+                <p class="slds-text-heading_large">{jobdetails.title}</p>
+                <p class="slds-text-heading_medium">{jobdetails.company}</p>
+                <p class="slds-text-title_bold">{jobdetails.location}</p>   
+                <p class="slds-text-body_regular">Salary: {jobdetails.salary}</p>
+                <p class="slds-text-body_regular">{jobdetails.snippet}</p>
+            </div>
+            <div class="slds-modal__content slds-var-p-around_medium" id="modal-form-id-1">
+                <lightning-input type="text" label="First Name" onchange={handleFirstNameChange} class="inputFirstName"></lightning-input>
+                <lightning-input type="text" label="Last Name" onchange={handleLastNameChange} class="inputLastName"></lightning-input>
+                <lightning-input type="email" label="Email" onchange={handleEmailChange} class="inputEmail"></lightning-input>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" id="cancel" onclick={handleCancel}><label for="cancel">Cancel</label></button>
+                <button class="slds-button slds-button_brand" id="save" onclick={createJobApplicationRecord}><label for="save">Save</label></button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

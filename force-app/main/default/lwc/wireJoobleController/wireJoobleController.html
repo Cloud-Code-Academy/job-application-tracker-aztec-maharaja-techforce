@@ -1,0 +1,69 @@
+<!-- <template>
+    <template for:each={jobs.data} for:item="job">
+        <lightning-card title={job.title} icon-name="custom:custom19" key={job.id}>
+            <div class="slds-p-around_medium">
+                <div class="job-detail">
+                    <p class="slds-text-heading_medium">{job.company}</p>
+                    <p class="slds-text-title_bold">{job.location}</p>
+                    <p class="slds-text-body_regular">{job.snippet}</p>
+                    <p class="slds-text-body_regular">Salary: {job.salary}</p>
+                    <lightning-button label="Apply Now" onclick={handleApplyNow} variant="brand"></lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+</template> -->
+
+
+        <!-- <c-wire-jooble-controller></c-wire-jooble-controller> -->
+
+
+<template>
+    <lightning-card title="Results" class="slds-var-p-around_medium">
+        <div class="slds-var-p-horizontal_small">
+            <div class="job-grid">
+                <!-- <template if:true={jobs}> -->
+                    <template for:each={jobs} for:item="job">
+                        <lightning-card title={job.title} icon-name="standard:case" key={job.id} class="postingCard">
+                            <div class="slds-var-p-around_medium">
+                                <div class="job-detail">
+                                    <p class="slds-text-heading_medium">{job.company}</p>
+                                    <p class="slds-text-title_bold">{job.location}</p>
+                                    <p class="slds-text-body_regular">Salary: {job.salary}</p>
+                                    <p class="slds-text-body_regular">{job.snippet}</p>
+                                    <div class="slds-var-p-top_small">
+                                        <lightning-button label="Apply Now" onclick={handleApplyNow} variant="brand"></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-card>
+                    <!-- </template> -->
+            </template>
+            <!-- <template if:true={jobs.error}><p>{jobs.error}</p></template> -->
+            </div>
+        </div>
+    </lightning-card>
+</template>
+
+<!-- <template> -->
+    <!-- <div class="job-grid"> -->
+        <!-- <template if:true={jobs.data}> -->
+        <!-- <template for:each={jobs.data} for:item="job"> -->
+            <!-- <lightning-card title={title} icon-name="standard:case" class="postingCard">
+                <div class="slds-var-p-around_medium">
+                    <div class="job-detail">
+                        <p class="slds-text-heading_medium">{company}</p>
+                        <p class="slds-text-title_bold">{location}</p>
+                        <p class="slds-text-body_regular">Salary: {salary}</p>
+                        <p class="slds-text-body_regular">{snippet}</p>
+                        <div class="slds-var-p-top_small">
+                        <lightning-button label="Apply Now" onclick={handleApplyNow} variant="brand"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card> -->
+        <!-- </template> -->
+    <!-- </template> -->
+    <!-- <template if:true={jobs.error}><p>{jobs.error}</p></template> -->
+    <!-- </div> -->
+<!-- </template> -->
