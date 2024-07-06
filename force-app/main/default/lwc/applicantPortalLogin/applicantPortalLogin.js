@@ -1,12 +1,22 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import LightningModal from 'lightning/modal';
+import { NavigationMixin } from 'lightning/navigation';
 import isCandidateExistInSystem from '@salesforce/apex/JobApplHelper.isCandidateExistInSystem';
 
-export default class ApplicantPortalLogin extends LightningModal {
+const columns = [
+    { label: 'Job Title', fieldName: 'Job Title', type: 'string' },
+    { label: 'Company Name', fieldName: 'Company Name', type: 'string' },
+    { label: 'Date Applied', fieldName: 'Date Applied', type: 'string' },
+    { label: 'Application Status', fieldName: 'Application Status', type: 'string' }
+];
+
+export default class ApplicantPortalLogin extends NavigationMixin(LightningModal) {
     @track APPLICANT_NOT_FOUND_ERROR_MESSAGE = "No job applications were found for the given email id.";
     @track applicantErrorMessage = false;
     @api applicantEmail = '';
     applicant_Id;
+    jobsAppliedList;
+  
 
     closeModal() {
         this.close();
@@ -23,16 +33,18 @@ export default class ApplicantPortalLogin extends LightningModal {
     handleLogin(event) {
         try{
             isCandidateExistInSystem({email : this.applicantEmail})
-            .then(applicantId => {
-                if(Object.is(applicantId, null) || Object.is(applicantId, undefined)) {
+            .then(jobsList => {
+                if(Object.is(jobsList, null) || Object.is(jobsList, undefined)) {
                     this.applicantErrorMessage = true;
                     this.applicant_id = undefined;
                 }
                 else {
-                    alert('Applicant Id : ' + JSON.stringify(applicantId));
-                    this.applicant_Id = applicantId;
+                    // alert('Applicant Id : ' + JSON.stringify(applicantId));
+                    // this.applicant_Id = applicantId;
                     this.applicantErrorMessage = false;
-                    this.close();
+                    // this.close();
+                    this.jobsAppliedList = jobsList;
+                    // alert('Jobs List : ' + JSON.stringify(this.jobsAppliedList));
                 }
             })
         }

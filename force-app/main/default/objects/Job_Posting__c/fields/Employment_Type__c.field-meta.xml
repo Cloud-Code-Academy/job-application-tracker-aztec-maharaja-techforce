@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employment_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Employment Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Full Time</fullName>
+                <default>false</default>
+                <label>Full Time</label>
+            </value>
+            <value>
+                <fullName>Part Time</fullName>
+                <default>false</default>
+                <label>Part Time</label>
+            </value>
+            <value>
+                <fullName>Contract - 6 Months</fullName>
+                <default>false</default>
+                <label>Contract - 6 Months</label>
+            </value>
+            <value>
+                <fullName>Contract - 12 Months</fullName>
+                <default>false</default>
+                <label>Contract - 12 Months</label>
+            </value>
+            <value>
+                <fullName>Contract - Long Term</fullName>
+                <default>false</default>
+                <label>Contract - Long Term</label>
+            </value>
+            <value>
+                <fullName>Contract To Hire</fullName>
+                <default>false</default>
+                <label>Contract To Hire</label>
+            </value>
+            <value>
+                <fullName>Temporary</fullName>
+                <default>false</default>
+                <label>Temporary</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

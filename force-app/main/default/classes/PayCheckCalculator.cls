@@ -37,7 +37,6 @@ public with sharing class PayCheckCalculator {
 
         netIncome = grossIncome - estimatedFedTaxes - socialSecurityTaxes - medicareWithholding - dedContributions.k401 - dedContributions.hsa - dedContributions.ira - dedContributions.fsa - dedContributions.otherContributions;
         federalTaxRate = Decimal.valueOf((estimatedFedTaxes / grossIncome));
-
         return new Map<String, Double>{'Taxable Income' => taxableIncome, 
                                         'Federal Tax Rate' => federalTaxRate, 
                                         'Estimated Federal Taxes' => estimatedFedTaxes,
@@ -45,7 +44,7 @@ public with sharing class PayCheckCalculator {
                                         'Social Security Taxes' => socialSecurityTaxes,
                                         'Medicare Withholding' => medicareWithholding,
                                         'Net Annual Take Homepay' => netIncome,
-                                        'Net Take Home Pay - 6 months' => (netIncome / 6),
+                                        'Net Take Home Pay - 6 months' => (netIncome / 2),
                                         'Net Take Home Pay - Monthly' => (netIncome / 12),
                                         'Net Take Home Pay - Bi-monthly' => (netIncome / 24),
                                         'Net Take Home Pay - Bi-weekly' => (netIncome / 26),

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>This field is used to identify the contact type.  
+Job Applicant - is primarily used to identify the candidates who applies for open jobs.
+Hiring Manager - is primarily used to identify the company&apos;s hiring manager for a given job posting
+Recruiter - is primarily used to identify the recruiter for a given job posting</description>
+    <externalId>false</externalId>
+    <label>Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Job Applicant</fullName>
+                <default>false</default>
+                <label>Job Applicant</label>
+            </value>
+            <value>
+                <fullName>Hiring Manager</fullName>
+                <default>false</default>
+                <label>Hiring Manager</label>
+            </value>
+            <value>
+                <fullName>Recruiter</fullName>
+                <default>false</default>
+                <label>Recruiter</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

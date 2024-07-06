@@ -34,13 +34,30 @@ public with sharing class JobApplHelper {
     }
     
     @AuraEnabled(cacheable=true)
-    public static Id isCandidateExistInSystem(String email) {
-        return [SELECT Id from Contact WHERE Email = :email AND Type__c = 'Job Applicant']?.Id;
+    public static List<Map<String, String>> isCandidateExistInSystem(String email) {
+        Id contactId = [SELECT Id from Contact WHERE Email = :email AND Type__c = 'Job Applicant']?.Id;
+        if(contactId != null) {
+            return getJobsAppliedByCandidate(contactId);
+        }
+        return null;
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Job_Application__c> getJobsAppliedByCandidate(Id contactId) {
-        return [SELECT Job_Posting__c, Applicant_Id__c, Status__c, Job_Posting__r.Name from Job_Application__c];
+    public static List<Map<String, String>> getJobsAppliedByCandidate(Id contactId) {
+        List<Map<String, String>> jobsList = new List<Map<String, String>>();
+
+        for(Job_Application__c jobRecord : [SELECT Id, Job_Posting__r.Name, Job_Posting__r.Company__r.Name, Date_Applied__c, Status__c from Job_Application__c 
+                WHERE applicant_id__c = :contactId AND (Status__c != 'Closed' OR Status__c != 'Withdrawn')]) {
+                    Map<String, String> jobsMap = new Map<String, String>();
+                    jobsMap.put('Id', jobRecord.Id);
+                    jobsMap.put('Job Title', jobRecord.Job_Posting__r.Name);
+                    jobsMap.put('Company Name', jobRecord.Job_Posting__r.Company__r.Name);
+                    jobsMap.put('Date Applied', String.valueOf(jobRecord.Date_Applied__c));
+                    jobsMap.put('Application Status', jobRecord.Status__c);
+
+                    jobsList.add(jobsMap);
+                }
+        return jobsList;
     }
 
     @AuraEnabled(cacheable=true)
