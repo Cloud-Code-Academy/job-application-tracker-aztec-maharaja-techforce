@@ -25,5 +25,28 @@ public with sharing class JobApplTriggerHelper {
             }
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static void jobApplicationDupeCheck(List<Job_Application__c> newJobApplications){
+        List<Job_Application__c> duplicates = JobApplicationHandler.dupeCheck(newJobApplications);
+
+        String errorMessage = 'You already saved this job.';
+        AuraHandledException auraEx = new AuraHandledException(errorMessage);
+        auraEx.setMessage(errorMessage);
+
+        for(Job_Application__c dupe : duplicates){
+            dupe.addError('You already saved this job.');
+            throw auraEx;
+        }
+
+    }
+
+    public static void updateDateApplied(List<SObject> newJobApplications, Map<Id,Job_Application__c> oldJobAppMap){
+        for(Job_Application__c job : (List<Job_Application__c>)newJobApplications){
+            if(job.Status__c == 'Applied' && oldJobAppMap.get(job.Id).Status__c != 'Applied'){
+                job.Date_Applied__c = Date.today();
+            }
+        }
+    }
 }
 

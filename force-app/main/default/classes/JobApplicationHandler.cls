@@ -6,12 +6,12 @@ public with sharing class JobApplicationHandler {
 
         for(Job_Application__c jobApplication : newJobApplications){
             jobPostIds.add(jobApplication.Job_Posting__c);
-            candidateIds.add(jobApplication.Candidate__c);
+            candidateIds.add(jobApplication.Applicant_Id__c);
         }
 
-        List<Job_Application__c> existingJobApplications = [SELECT Id, Candidate__c, Job_Posting__c 
+        List<Job_Application__c> existingJobApplications = [SELECT Id, Applicant_Id__c, Job_Posting__c  
                                                             FROM Job_Application__c 
-                                                            WHERE Candidate__c IN :candidateIds 
+                                                            WHERE Applicant_Id__c IN :candidateIds 
                                                             AND Job_Posting__c IN :jobPostIds];
 
         Map<Id,Set<Id>> mapOfExistingApplications = new Map<Id,Set<Id>>();
@@ -21,7 +21,7 @@ public with sharing class JobApplicationHandler {
             for(Job_Application__c jobApplication : existingJobApplications){
 
                 String jobPostId = jobApplication.Job_Posting__c;
-                String candidateId = jobApplication.Candidate__c;
+                String candidateId = jobApplication.Applicant_Id__c;
 
                 if(!mapOfExistingApplications.containsKey(jobPostId)){
                     mapOfExistingApplications.put(jobPostId, new Set<Id>());
@@ -38,7 +38,7 @@ public with sharing class JobApplicationHandler {
         List<Job_Application__c> duplicateRecords = new List<Job_Application__c>();
 
         for(Job_Application__c jobApp : newJobApplications){
-            if(mapOfExistingApplications.containsKey(jobApp.Job_Posting__c) && mapOfExistingApplications.get(jobApp.Job_Posting__c).contains(jobApp.Candidate__c)){
+            if(mapOfExistingApplications.containsKey(jobApp.Job_Posting__c) && mapOfExistingApplications.get(jobApp.Job_Posting__c).contains(jobApp.Applicant_Id__c)){
                 duplicateRecords.add(jobApp);
             }
         }

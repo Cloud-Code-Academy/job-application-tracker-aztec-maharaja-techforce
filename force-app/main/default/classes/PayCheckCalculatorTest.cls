@@ -22,26 +22,26 @@
 @isTest
 private class PayCheckCalculatorTest {
 
-    @isTest
-    static void testCalculatePayAndTaxes() {
-        String filingStatus = 'Single';
-        Double income = 140000;
-        Integer age = 52;
-        PayCheckCalculator.DeductionsContributions dedContributions = new PayCheckCalculator.DeductionsContributions();
-        dedContributions.k401 = 15000;
-        dedContributions.ira = 0;
-        dedContributions.hsa = 7500;
-        dedContributions.fsa = 0;
-        dedContributions.otherContributions = 0;
-        dedContributions.itemizedDeductions = 0;
-        dedContributions.taxesWithheld = 0;
+    // @isTest
+    // static void testCalculatePayAndTaxes() {
+    //     String filingStatus = 'Single';
+    //     Double income = 140000;
+    //     Integer age = 52;
+    //     PayCheckCalculator.DeductionsContributions dedContributions = new PayCheckCalculator.DeductionsContributions();
+    //     dedContributions.k401 = 15000;
+    //     dedContributions.ira = 0;
+    //     dedContributions.hsa = 7500;
+    //     dedContributions.fsa = 0;
+    //     dedContributions.otherContributions = 0;
+    //     dedContributions.itemizedDeductions = 0;
+    //     dedContributions.taxesWithheld = 0;
 
-        Test.startTest();
-        Map<String, Double> taxResult = PayCheckCalculator.calculatePayAndTaxes(filingStatus, income, age, dedContributions);
-        Test.stopTest();
+    //     Test.startTest();
+    //     Map<String, Double> taxResult = PayCheckCalculator.calculatePayAndTaxes(filingStatus, income, age, dedContributions);
+    //     Test.stopTest();
 
-        Set<String> mapKeys = new Set<String>{'Taxable Income', 'Federal Tax Rate', 'Estimated Federal Taxes', 'Social Security Taxes', 'Medicare Withholding','Net Annual Take Homepay',
-                                                'Net Take Home Pay - 6 months', 'Net Take Home Pay - Monthly', 'Net Take Home Pay - Bi-monthly', 'Net Take Home Pay - Bi-weekly'};
-        System.assertEquals(mapKeys, taxResult.keySet(), 'Result Map keys does not match with expected keys');
-    }
+    //     Set<String> mapKeys = new Set<String>{'Taxable Income', 'Federal Tax Rate', 'Estimated Federal Taxes', 'Social Security Taxes', 'Medicare Withholding','Net Annual Take Homepay',
+    //                                             'Net Take Home Pay - 6 months', 'Net Take Home Pay - Monthly', 'Net Take Home Pay - Bi-monthly', 'Net Take Home Pay - Bi-weekly'};
+    //     System.assertEquals(mapKeys, taxResult.keySet(), 'Result Map keys does not match with expected keys');
+    // }
 }

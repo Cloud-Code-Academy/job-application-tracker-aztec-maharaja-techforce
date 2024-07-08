@@ -7,7 +7,7 @@ import createJobPosting from '@salesforce/apex/JobPostingHandler.createJobPostin
 import createCandidate from '@salesforce/apex/ContactHandler.createCandidate';
 import { createRecord } from 'lightning/uiRecordApi';
 import JOB_APPLICATION_OBJECT from '@salesforce/schema/Job_Application__c';
-import CANDIDATE_FIELD__c from '@salesforce/schema/Job_Application__c.Candidate__c';
+import CANDIDATE_FIELD__c from '@salesforce/schema/Job_Application__c.Applicant_Id__c';
 import JOB_POSTING_FIELD__c from '@salesforce/schema/Job_Application__c.Job_Posting__c';
 import STATUS_FIELD__c from '@salesforce/schema/Job_Application__c.Status__c';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent'

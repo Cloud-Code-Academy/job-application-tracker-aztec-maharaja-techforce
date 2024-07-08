@@ -16,7 +16,7 @@ public with sharing class JobPostingHandler {
     @AuraEnabled
     public static Job_Posting__c createJobPosting (String accountId, String jobPostingName, String description, String location, String postId, String salary){
         Job_Posting__c newJobPosting = new Job_Posting__c(  Name = jobPostingName, 
-                                                            Account__c = accountId, 
+                                                            Company__c = accountId, 
                                                             Description__c = description, 
                                                             Location__c = location, 
                                                             Salary__c = salary, 
