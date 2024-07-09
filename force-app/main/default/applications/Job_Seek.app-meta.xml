@@ -36,7 +36,7 @@
     <tabs>Job_Application__c</tabs>
     <tabs>Interview__c</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Job_Seek_UtilityBar</utilityBar>
+    <!-- <utilityBar>Job_Seek_UtilityBar</utilityBar> -->
     <workspaceConfig>
         <mappings>
             <tab>Interview__c</tab>
