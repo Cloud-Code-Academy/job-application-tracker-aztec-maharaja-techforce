@@ -116,13 +116,14 @@ export default class ApplyNowModal extends LightningElement {
         };
 
         createRecord(recordInput).then((result) => {
+
             const success = new ShowToastEvent({
                 title: 'Saved Job Succesfully',
                 message: 'You have saved {0}',
                 variant: 'success',
                 messageData:[
                     {
-                    url: 'https://capstone6-dev-ed.develop.lightning.force.com/' + result.id,
+                    url: this.getBaseURL()+ result.id,
                     label: this.jobdetails.title
                 }
             ]
@@ -154,6 +155,17 @@ export default class ApplyNowModal extends LightningElement {
 
 
     }
+
+    getBaseURL() {
+
+        const url = location.href;  // entire url including querystring - also: window.location.href;
+    
+        const baseURL = url.substring(0, url.indexOf('/', 14));
+    
+        return baseURL + "/";
+    
+       }
+    
 
 
 }

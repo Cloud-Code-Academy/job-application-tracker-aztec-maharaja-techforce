@@ -18,5 +18,4 @@
 // System.debug(JobPostingHandler.createJobPosting('001ak00000LT029AAD', 'Test Job Post'));
 
 // System.debug(System.Date.today().format());
-CronTrigger jobRecord = [SELECT  Id FROM CronTrigger  where CronJobDetail.Name = 'Jooble'];
-System.abortJob(jobRecord.Id);
+System.debug(URL.getOrgDomainUrl());
