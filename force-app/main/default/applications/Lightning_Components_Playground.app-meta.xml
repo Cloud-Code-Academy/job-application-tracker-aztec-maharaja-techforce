@@ -15,5 +15,5 @@
     <tabs>Jobs_Portal</tabs>
     <tabs>Job_Application__c</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Lightning_Components_Playground_UtilityBar</utilityBar>
+    <!-- <utilityBar>Lightning_Components_Playground_UtilityBar</utilityBar> -->
 </CustomApplication>

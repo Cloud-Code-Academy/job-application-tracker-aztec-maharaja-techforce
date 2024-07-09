@@ -52,7 +52,7 @@ export default class JobListing extends LightningElement {
                 }
             })
             .catch(error => {
-                alert('Error Occurred : ' + error);
+                alert('Error Occurred : ' + JSON.stringify(error));
                 this.searchJobError = true;
             });            
         }
