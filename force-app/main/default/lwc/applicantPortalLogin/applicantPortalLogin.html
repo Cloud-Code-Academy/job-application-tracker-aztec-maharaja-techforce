@@ -11,11 +11,11 @@
                 onchange={handleChange}>
             </lightning-input>
         </div>
-        <template lwc:if={jobsAppliedList}>
+        <!-- <template lwc:if={jobsAppliedList}>
             <div>
                 <lightning-datatable key-field="Id" data={jobsAppliedList} columns={columns}></lightning-datatable>
             </div>    
-        </template>
+        </template> -->
         <div slot="footer">
             <template lwc:if={applicantErrorMessage}>
                 <div class="error"><span style="color: red;">{APPLICANT_NOT_FOUND_ERROR_MESSAGE}</span></div>

@@ -21,7 +21,7 @@ public with sharing class JobApplDataSync implements Schedulable{
             httpRequest.setEndpoint('https://' + urlName + '/api/' + apiKey);
             httpRequest.setMethod('POST');
             httpRequest.setHeader('Content-Type', 'application/json;charset=utf-8');
-            String requestPayLoad = generateRequestPayLoad('Salesforce Developer', 'USA', '2024-06-08', 50, '120000');  //keywords, location, datecreatedfrom, resultonpage, salary
+            String requestPayLoad = generateRequestPayLoad('Designer', 'USA', '2024-06-08', 50, '120000');  //keywords, location, datecreatedfrom, resultonpage, salary
             httpRequest.setBody(requestPayLoad);
             httpRequest.setHeader('Connection','keep-alive');
             httpRequest.setTimeout(120000);

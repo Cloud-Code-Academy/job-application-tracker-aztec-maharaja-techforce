@@ -44,8 +44,12 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
                     this.applicantErrorMessage = false;
                     // this.close();
                     this.jobsAppliedList = jobsList;
-                    // alert('Jobs List : ' + JSON.stringify(this.jobsAppliedList));
-                }
+                    alert('Jobs List : ' + JSON.stringify(this.jobsAppliedList));
+                    this.close();
+                    this.navigateToApplicantView();
+                    
+                    }
+
             })
         }
         catch(error) {
@@ -53,5 +57,18 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
             this.applicant_Id = undefined;
             this.applicantErrorMessage = true;
         }
+    }
+
+    navigateToApplicantView() {
+        let direction = {
+            componentDef : 'c:Applicant_View'
+        };
+        let encodeDef = btoa(JSON.stringify(direction));
+        this[NavigationMixin.Navigate]({
+            type:'standard_webPage',
+            attributes : {
+                url : '/n/Jobs_Portal.app#' + encodeDef
+            }
+        })
     }
 }

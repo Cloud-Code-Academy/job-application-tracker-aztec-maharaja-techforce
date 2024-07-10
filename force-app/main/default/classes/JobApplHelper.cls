@@ -9,7 +9,8 @@ public with sharing class JobApplHelper {
         List<Job_Posting__c> jobPostingsList = [SELECT Id, Name, Company__r.Name, Location__c, Description__c, Department__c, Employment_Type__c,  Salary__c 
                 FROM Job_Posting__c 
                 WHERE Location__c LIKE :locationKey 
-                AND Status__c = 'Open' ];
+                AND Status__c = 'Open' 
+                AND Salary__c != null];
         
         for(Job_Posting__c jobPostingRec : jobPostingsList) {
             String[] salaryRange;
