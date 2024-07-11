@@ -1,7 +1,7 @@
 <template>
-    <!-- <lightning-modal-header>Test Modal Header</lightning-modal-header> -->
+    <lightning-modal-header label="Applicant Login"></lightning-modal-header>
     <lightning-modal-body>
-        <lightning-card title="Applicant Login">
+        <lightning-card title="">
         <div class="slds-var-p-horizontal_small">
             <lightning-input 
                 type="text" 
@@ -11,11 +11,22 @@
                 onchange={handleChange}>
             </lightning-input>
         </div>
-        <!-- <template lwc:if={jobsAppliedList}>
-            <div>
+        <template lwc:if={jobsAppliedList}>
+            <!-- <div>
                 <lightning-datatable key-field="Id" data={jobsAppliedList} columns={columns}></lightning-datatable>
-            </div>    
-        </template> -->
+            </div>     -->
+
+            <template for:each={jobsAppliedList} for:item="job">
+                <lightning-layout-item key={job.Id}  padding="around-small">                    
+                        <div class="slds-var-p-horizontal_small">
+                            <div><span><b>Job Title : </b></span>{job.JobTitle}</div>
+                            <div><span><b>Company Name : </b></span>{job.CompanyName}</div>
+                            <div><span><b>Date Applied : </b></span>{job.DateApplied}</div>
+                            <div><span><b>Application Status : </b></span>{job.ApplicationStatus}</div>
+                        </div>
+                </lightning-layout-item>
+            </template>    
+        </template>
         <div slot="footer">
             <template lwc:if={applicantErrorMessage}>
                 <div class="error"><span style="color: red;">{APPLICANT_NOT_FOUND_ERROR_MESSAGE}</span></div>
