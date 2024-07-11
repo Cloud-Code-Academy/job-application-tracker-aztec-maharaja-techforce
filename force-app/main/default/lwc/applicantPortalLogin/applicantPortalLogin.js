@@ -2,12 +2,13 @@ import { LightningElement, api, track, wire } from 'lwc';
 import LightningModal from 'lightning/modal';
 import { NavigationMixin } from 'lightning/navigation';
 import isCandidateExistInSystem from '@salesforce/apex/JobApplHelper.isCandidateExistInSystem';
+import ApplicantView from 'c/applicantView';
 
 const columns = [
-    { label: 'Job Title', fieldName: 'Job Title', type: 'string' },
-    { label: 'Company Name', fieldName: 'Company Name', type: 'string' },
-    { label: 'Date Applied', fieldName: 'Date Applied', type: 'string' },
-    { label: 'Application Status', fieldName: 'Application Status', type: 'string' }
+    { label: 'Job Title', fieldName: 'JobTitle', type: 'string' },
+    { label: 'Company Name', fieldName: 'CompanyName', type: 'string' },
+    { label: 'Date Applied', fieldName: 'DateApplied', type: 'string' },
+    { label: 'Application Status', fieldName: 'ApplicationStatus', type: 'string' }
 ];
 
 export default class ApplicantPortalLogin extends NavigationMixin(LightningModal) {
@@ -27,6 +28,7 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
         if(event.target.name === "email_id") { 
             this.applicantEmail = inputValue;
             this.applicantErrorMessage = false;
+            this.jobsAppliedList = undefined;
         }
     }
 
@@ -44,9 +46,9 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
                     this.applicantErrorMessage = false;
                     // this.close();
                     this.jobsAppliedList = jobsList;
-                    alert('Jobs List : ' + JSON.stringify(this.jobsAppliedList));
-                    this.close();
-                    this.navigateToApplicantView();
+                    // alert('Jobs List : ' + JSON.stringify(this.jobsAppliedList));
+                    // this.close();
+                    // this.navigateToApplicantView();
                     
                     }
 
@@ -60,14 +62,16 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
     }
 
     navigateToApplicantView() {
+        console.log('Navigating to applicant view page');
         let direction = {
-            componentDef : 'c:Applicant_View'
+            componentDef : 'c:'+ ApplicantView 
         };
         let encodeDef = btoa(JSON.stringify(direction));
+        console.log('encodeDef : ' + encodeDef);
         this[NavigationMixin.Navigate]({
             type:'standard_webPage',
             attributes : {
-                url : '/n/Jobs_Portal.app#' + encodeDef
+                url : '/one/one.app#' + encodeDef
             }
         })
     }

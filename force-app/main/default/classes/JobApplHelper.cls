@@ -1,8 +1,13 @@
+/*  
+*   This Apex Helper class will be used to perform multiple actions from LWC component.
+*/
+
 public with sharing class JobApplHelper {
     public JobApplHelper() {
 
     }
 
+    /* This method will return all open jobs for the given Location */
     @AuraEnabled(cacheable=true)
     public static List<Job_Posting__c> getOpenJobs(String location) {
         String locationKey = '%' + location + '%';
@@ -10,13 +15,19 @@ public with sharing class JobApplHelper {
                 FROM Job_Posting__c 
                 WHERE Location__c LIKE :locationKey 
                 AND Status__c = 'Open' 
-                AND Salary__c != null];
+                AND Salary__c != null
+                ];
         
         for(Job_Posting__c jobPostingRec : jobPostingsList) {
             String[] salaryRange;
             if( (jobPostingRec.Salary__c).contains(' - ') && !(jobPostingRec.Salary__c).contains('per hour')) {
                 salaryRange = jobPostingRec.Salary__c.split(' - ');
-                jobPostingRec.Salary__c = salaryRange[0].replace('k', '000');
+                if(!salaryRange[0].contains('.')) {
+                    jobPostingRec.Salary__c = salaryRange[0].replace('k', '000');
+                }
+                else {
+                    jobPostingRec.Salary__c = (salaryRange[0].replace('.','')).replace('k', '00');
+                }
             }
             else if( (jobPostingRec.Salary__c).contains('per hour') ) {
                 if(jobPostingRec.Salary__c.contains(' - ')) {
@@ -24,16 +35,28 @@ public with sharing class JobApplHelper {
                 }
                 else {
                     salaryRange = jobPostingRec.Salary__c.split(' per hour');
+                 
                 }
-                jobPostingRec.Salary__c = '$' + String.valueOf(Integer.valueOf(salaryRange[0].substringAfter('$'))* 2080);
+                if(!salaryRange[0].contains('.')) {
+                    jobPostingRec.Salary__c = '$' + String.valueOf(Integer.valueOf(salaryRange[0].substringAfter('$'))* 2080);
+                }
+                else {
+                    jobPostingRec.Salary__c = '$' + String.valueOf(Integer.valueOf(salaryRange[0].substringBetween('$', '.'))* 2080);
+                }
             }
             else {
-                jobPostingRec.Salary__c = jobPostingRec.Salary__c.replace('k', '000');
+                if(!jobPostingRec.Salary__c.contains('.')) {
+                    jobPostingRec.Salary__c = jobPostingRec.Salary__c.replace('k', '000');
+                }
+                else {
+                    jobPostingRec.Salary__c = (jobPostingRec.Salary__c.replace('.', '')).replace('k', '00');
+                }
             }
         }
         return jobPostingsList;
     }
     
+    /* This method will check if the candidate has already registered in the system or not.  If registered, it will return the list of jobs applied by the candidate */
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> isCandidateExistInSystem(String email) {
         Id contactId = [SELECT Id from Contact WHERE Email = :email AND Type__c = 'Job Applicant']?.Id;
@@ -43,24 +66,26 @@ public with sharing class JobApplHelper {
         return null;
     }
 
+    /* This method will return all the jobs that were applied by the candidate having status other than Closed / Withdrawn / Accepted */
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> getJobsAppliedByCandidate(Id contactId) {
         List<Map<String, String>> jobsList = new List<Map<String, String>>();
 
         for(Job_Application__c jobRecord : [SELECT Id, Job_Posting__r.Name, Job_Posting__r.Company__r.Name, Date_Applied__c, Status__c from Job_Application__c 
-                WHERE applicant_id__c = :contactId AND (Status__c != 'Closed' OR Status__c != 'Withdrawn')]) {
+                WHERE applicant_id__c = :contactId AND (Status__c != 'Closed' OR Status__c != 'Withdrawn' OR Status__c != 'Accepted')]) {
                     Map<String, String> jobsMap = new Map<String, String>();
                     jobsMap.put('Id', jobRecord.Id);
-                    jobsMap.put('Job Title', jobRecord.Job_Posting__r.Name);
-                    jobsMap.put('Company Name', jobRecord.Job_Posting__r.Company__r.Name);
-                    jobsMap.put('Date Applied', String.valueOf(jobRecord.Date_Applied__c));
-                    jobsMap.put('Application Status', jobRecord.Status__c);
+                    jobsMap.put('JobTitle', jobRecord.Job_Posting__r.Name);
+                    jobsMap.put('CompanyName', jobRecord.Job_Posting__r.Company__r.Name);
+                    jobsMap.put('DateApplied', String.valueOf(jobRecord.Date_Applied__c));
+                    jobsMap.put('ApplicationStatus', jobRecord.Status__c);
 
                     jobsList.add(jobsMap);
                 }
         return jobsList;
     }
 
+    /* This method will save the job application based on the candidate's first name, last name, email */
     @AuraEnabled(cacheable=true)
     public static String saveJobApplication(String contactId, String firstName, String lastName, String emailId, Id jobPostingId){
         Contact contactRec;
@@ -81,6 +106,11 @@ public with sharing class JobApplHelper {
         }
     }
 
+    /* This method will be used to send by 2 different components.
+    *  1. JobApplDataSync and CleanOlderJobApplications schedulable classes to send the confirmation email to System Administrator after successful completion
+    *  2. Job_Application_Screen Flow after successful insert of Job Application Record 
+    */
+    
     public static void sendExecutionStatusEmail(String mailContext, String subject, String body, String applicantEmail){
         if(String.isNotEmpty(mailContext) && (mailContext == 'Job Data Integration' || mailContext == 'Job Application Cleanup')) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

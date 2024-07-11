@@ -1,3 +1,7 @@
+/*  
+*   This Apex Schedulable class will be used to clean up Job Applications which older than N days and having status other than Closed or Accepted. 
+*/
+
 public with sharing class CleanOlderJobApplications  implements Schedulable {
     public CleanOlderJobApplications() {
 

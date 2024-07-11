@@ -1,3 +1,10 @@
+/*  
+*   This Apex Schedulable class will be used to retrieve the details of Open Job details based on the given parameters
+*   from external Job Board (Jooble.org).   Once the data has been retrieved successfully, necessary checks
+*   are performed on Account object and Job_Posting__c object to avoid any duplication of data in the system.
+*   The required API Key has been stored in Custom Metadata for easy maintenance of API key  
+*/
+
 public with sharing class JobApplDataSync implements Schedulable{
     public static Boolean EXCEPTION_OCCURRED = false;
 
@@ -5,7 +12,7 @@ public with sharing class JobApplDataSync implements Schedulable{
         syncDataFromJobBoard('Jooble');
     }
 
-
+/* Below method will connect to external job board i.e. Jooble.org and fetches the open job positions, stores in salesforce org */
     @future(callout = true)
     public static void syncDataFromJobBoard(String jobBoardName) {
         String urlName = '';
@@ -47,10 +54,12 @@ public with sharing class JobApplDataSync implements Schedulable{
         }
     }
 
+    /* Below method will extract the API Name and API Key from custom metadata file for the given job board name */
     private static List<Job_Post_Integration__mdt> getJobBoardAPIKey(String jobBoard) {
         return [SELECT API_Name__c, API_Key__c FROM Job_Post_Integration__mdt WHERE DeveloperName = :jobBoard];
     }
 
+    /* Below method will be generate input payload in JSON format for the external job board REST Call */
     private static String generateRequestPayLoad(String keywords, String location, String datecreatedfrom, Integer resultonpage, String salary) {
         JooblePayLoad payLoad = new JooblePayLoad();
         payLoad.keywords = keywords;
@@ -62,6 +71,7 @@ public with sharing class JobApplDataSync implements Schedulable{
         return JSON.serialize(payLoad);
     }
 
+    /* Below method will parse the data that is coming from REST call and stores in Salesforce Org after performing necessary checks to maintain data veracity */
     private static void parseJobData(String jobBoardName, String jobData) {
         List<Object> jobDataList = (List<Object>)JSON.deserializeUntyped(jobData);
         //  Keys : company, id, link, location, salary, snippet, source, title, type, updated
@@ -153,6 +163,7 @@ public with sharing class JobApplDataSync implements Schedulable{
         upsert jobPostingsList;
     }
 
+    /* Inner class used to generate JSON Input payload for REST API Call */
     private class JooblePayload {
         String keywords;
         String location;
