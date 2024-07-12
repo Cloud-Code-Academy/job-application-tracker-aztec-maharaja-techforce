@@ -62,17 +62,22 @@ export default class ApplicantPortalLogin extends NavigationMixin(LightningModal
     }
 
     navigateToApplicantView() {
-        console.log('Navigating to applicant view page');
-        let direction = {
-            componentDef : 'c:'+ ApplicantView 
-        };
-        let encodeDef = btoa(JSON.stringify(direction));
-        console.log('encodeDef : ' + encodeDef);
+        // let direction = {
+        //     componentDef : 'c:applicantView'
+        // };
+        // let encodeDef = btoa(JSON.stringify(direction));
+        // this[NavigationMixin.Navigate]({
+        //     type:'standard__webPage',
+        //     attributes : {
+        //         url : '/one/one.app#' + encodeDef
+        //     }
+        // });
+
         this[NavigationMixin.Navigate]({
-            type:'standard_webPage',
-            attributes : {
-                url : '/one/one.app#' + encodeDef
+            type: 'standard__app',
+            attributes: {
+                appTarget: 'c__MyCustomApplication',
             }
-        })
+        });
     }
 }

@@ -28,7 +28,7 @@ public with sharing class JobApplDataSync implements Schedulable{
             httpRequest.setEndpoint('https://' + urlName + '/api/' + apiKey);
             httpRequest.setMethod('POST');
             httpRequest.setHeader('Content-Type', 'application/json;charset=utf-8');
-            String requestPayLoad = generateRequestPayLoad('Designer', 'USA', '2024-06-08', 50, '120000');  //keywords, location, datecreatedfrom, resultonpage, salary
+            String requestPayLoad = generateRequestPayLoad('Architect', 'USA', '2024-07-01', 50, '120000');  //keywords, location, datecreatedfrom, resultonpage, salary
             httpRequest.setBody(requestPayLoad);
             httpRequest.setHeader('Connection','keep-alive');
             httpRequest.setTimeout(120000);
@@ -38,13 +38,14 @@ public with sharing class JobApplDataSync implements Schedulable{
                 if(response.getStatusCode() == 200) {
                     String responseData = response.getBody();
                     Map<String, Object> jsonResponseMap = (Map<String, Object>)JSON.deserializeUntyped(responseData);
-                    List<Object> jobDataList = (List<Object>)jsonResponseMap.get('jobs');
+                    // List<Object> jobDataList = (List<Object>)jsonResponseMap.get('jobs');
                     parseJobData(jobBoardName, JSON.serialize(jsonResponseMap.get('jobs')));
                 }
             }
             catch(Exception ex) {
                 EXCEPTION_OCCURRED = true;
                 JobApplHelper.sendExecutionStatusEmail('Job Data Integration', 'Jooble Job Data Sync Job Status', 'Execution of job sync failed with error : ' + ex.getMessage(), null);
+                return;
             }
             finally{
                 if(!EXCEPTION_OCCURRED) {

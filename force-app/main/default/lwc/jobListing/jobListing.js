@@ -3,9 +3,10 @@ import JobApplModalPage from 'c/jobApplModalPage';
 import ApplicantPortalLogin from 'c/applicantPortalLogin';
 import PayCheckCalculator from 'c/payCheckCalculator';
 import getOpenJobs from '@salesforce/apex/JobApplHelper.getOpenJobs';
+import { NavigationMixin } from 'lightning/navigation';
 
 
-export default class JobListing extends LightningElement {
+export default class JobListing extends NavigationMixin(LightningElement) {
     @track JOB_SEARCH_ERROR_MESSAGE = "No Jobs found for the given location.";
     @track searchJobError = false;
     @api locationName = '';
@@ -63,10 +64,11 @@ export default class JobListing extends LightningElement {
         }
     }
 
-    portalLogin(event) {
+    portalLogin() {
         ApplicantPortalLogin.open({
             size : 'small'
         });
+        // this.navigateToApplicantView();
     }
 
     applyJob(event) {
@@ -113,5 +115,28 @@ export default class JobListing extends LightningElement {
         catch(error){
             console.log ('error in flow invoking : ' + error);
         }
-    } 
+    }
+    
+    navigateToApplicantView() {
+        console.log('Navigating to applicant view page');
+        let direction = {
+            componentDef : 'c:applicantView'
+        };
+        let encodeDef = btoa(JSON.stringify(direction));
+        console.log('encodeDef : ' + encodeDef);
+        this[NavigationMixin.Navigate]({
+            type:'standard__webPage',
+            attributes : {
+                url : '/one/one.app#' + encodeDef
+            }
+        });
+
+        // this[NavigationMixin.Navigate]({
+        //     type: 'standard__objectPage',
+        //     attributes: {
+        //         objectApiName: 'Account',
+        //         actionName: 'new'
+        //     }
+        // });
+    }
 }

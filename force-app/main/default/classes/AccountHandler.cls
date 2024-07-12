@@ -14,7 +14,7 @@ public with sharing class AccountHandler {
 
     @AuraEnabled
     public static Account createAccount(String name){
-        Account newAccount = new Account(Name = name);
+        Account newAccount = new Account(Name = name, Type = 'Job Posts');
         insert newAccount;
         return newAccount;
     }
