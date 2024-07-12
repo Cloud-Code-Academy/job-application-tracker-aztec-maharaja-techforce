@@ -1,0 +1,11 @@
+.job-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+}
+
+.postingCard {
+    flex: 1 1 calc(33.333% - 1rem);
+    box-sizing: border-box;
+    border: 1px solid black;
+}

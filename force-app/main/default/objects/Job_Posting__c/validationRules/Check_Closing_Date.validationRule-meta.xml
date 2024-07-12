@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Closing_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>Date_Posted__c &gt;  Date_Closed__c</errorConditionFormula>
+    <errorDisplayField>Date_Closed__c</errorDisplayField>
+    <errorMessage>Job Closing Date cannot be in the prior to its Posting Date</errorMessage>
+</ValidationRule>
