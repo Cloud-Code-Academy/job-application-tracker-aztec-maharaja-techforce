@@ -1,0 +1,41 @@
+<template>
+    <lightning-modal-header label="Applicant Login"></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-card title="">
+        <div class="slds-var-p-horizontal_small">
+            <lightning-input 
+                type="text" 
+                name="email_id" 
+                label="Login with your Email Id" 
+                max-length="30"
+                onchange={handleChange}>
+            </lightning-input>
+        </div>
+        <template lwc:if={jobsAppliedList}>
+            <!-- <div>
+                <lightning-datatable key-field="Id" data={jobsAppliedList} columns={columns}></lightning-datatable>
+            </div>     -->
+
+            <template for:each={jobsAppliedList} for:item="job">
+                <lightning-layout-item key={job.Id}  padding="around-small">                    
+                        <div class="slds-var-p-horizontal_small">
+                            <div><span><b>Job Title : </b></span>{job.JobTitle}</div>
+                            <div><span><b>Company Name : </b></span>{job.CompanyName}</div>
+                            <div><span><b>Date Applied : </b></span>{job.DateApplied}</div>
+                            <div><span><b>Application Status : </b></span>{job.ApplicationStatus}</div>
+                        </div>
+                </lightning-layout-item>
+            </template>    
+        </template>
+        <div slot="footer">
+            <template lwc:if={applicantErrorMessage}>
+                <div class="error"><span style="color: red;">{APPLICANT_NOT_FOUND_ERROR_MESSAGE}</span></div>
+            </template>
+        </div>
+        </lightning-card>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={closeModal} class="slds-var-p-right_x-small"></lightning-button>
+        <lightning-button label="Login" variant="brand" onclick={handleLogin}></lightning-button>
+    </lightning-modal-footer>
+</template>

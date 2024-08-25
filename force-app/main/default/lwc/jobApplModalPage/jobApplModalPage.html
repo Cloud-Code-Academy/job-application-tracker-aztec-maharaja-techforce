@@ -1,0 +1,21 @@
+<template>
+    <template lwc:if={showHeader}>
+        <lightning-modal-header label="Job Application Modal Window"></lightning-modal-header>
+    </template>
+    <lightning-modal-body>
+        <template lwc:if={flowModal}>
+            <div class="slds-is-relative">
+                <lightning-flow 
+                    flow-api-name={flowName}
+                    flow-input-variables={inputVariables}
+                    onstatuschange={handleStatusChange} >
+                </lightning-flow>
+            </div>
+        </template>
+    </lightning-modal-body>
+    <template lwc:if={showFooter}>
+        <lightning-modal-footer>
+            <lightning-button label="Close" onclick={handleClose}></lightning-button>
+        </lightning-modal-footer>
+    </template>
+</template>

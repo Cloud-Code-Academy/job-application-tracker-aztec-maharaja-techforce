@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Duplicate_Event_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate_Event_Error</shortDescription>
+        <value>The event start/end date/time is conflicting with another scheduled meeting.  Please correct start/end date/time and try</value>
+    </labels>
+</CustomLabels>

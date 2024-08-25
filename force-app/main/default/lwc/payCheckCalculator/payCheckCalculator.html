@@ -1,0 +1,109 @@
+<template>
+    <lightning-modal-header label="Federal Income Tax Calculator: Return and Refund Estimator 2023-2024"></lightning-modal-header>
+    <lightning-modal-body>
+    <div>
+        <lightning-card title="Pay Calculator" variant="base">
+            <div slot="actions">
+                <!-- <lightning-button  icon-position="left" variant="standard" label="Calculate Tax Withholding" onclick={calculateTaxWithholding}></lightning-button> -->
+            </div>
+            <div slot="footer">
+
+            </div>
+
+            <div class="slds-card__body_inner">
+                <lightning-layout>
+                    <lightning-layout-item size="8">
+                        <div style="font-size: 0.8125rem;">
+                            <table border="0">
+                                <tr>
+                                    <td colspan="3">Taxable Income</td>
+                                    <td colspan="1"><lightning-formatted-number value={taxableIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Effective Tax Rate</td>
+                                    <td colspan="1"><lightning-formatted-number value={taxRate} format-style="percent" maximum-fraction-digits="2"> </lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Estimated Federal Taxes</td>
+                                    <td colspan="1"><lightning-formatted-number value={estimatedFedTax} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Social Security Taxes</td>
+                                    <td colspan="1"><lightning-formatted-number value={socialSecTax} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Medicare Taxes</td>
+                                    <td colspan="1"><lightning-formatted-number value={medicareTax} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">Federal Taxes Withheld</td>
+                                    <td colspan="1"><lightning-formatted-number value={taxesWithheld} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="height: 2px;"><hr></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">We estimate you will owe</td>
+                                    <td colspan="1"><lightning-formatted-number value={balanceFedTax} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Net Annual Income (after taxes) </td>
+                                    <td colspan="1"><lightning-formatted-number value={netAnnualIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Net Income (6 months - after taxes)</td>
+                                    <td colspan="1"><lightning-formatted-number value={netHalfYearlyIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Net Monthly Income (after taxes)</td>
+                                    <td colspan="1"><lightning-formatted-number value={netMonthlyIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Net Bi-monthly Income (after taxes)</td>
+                                    <td colspan="1"><lightning-formatted-number value={netBimonthlyIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Net Bi-weekly Income (after taxes)</td>
+                                    <td colspan="1"><lightning-formatted-number value={netBiweeklyIncome} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <lightning-select value={filingStatus} label="Tax filing status" options={filingStatusOptions} onchange={handleDataChange}></lightning-select>
+                        <lightning-input label="Income" placeholder="$0" type="number" formatter="currency" variant="standard" value={annualGrossSalary} onchange={handleDataChange}></lightning-input>
+                        <lightning-input label="Age" placeholder="30" type="number" variant="standard" value={age}></lightning-input>
+                        <lightning-input label="401k" placeholder="$0" type="number" formatter="currency" variant="standard" value={k401} onchange={handleDataChange}></lightning-input>
+                        <lightning-input label="Ira" placeholder="$0" type="number" formatter="currency" variant="standard" value={ira} onchange={handleDataChange}></lightning-input>
+                        <lightning-input label="TaxWithHeld" placeholder="$0" type="number" formatter="currency" variant="standard" value={taxesWithheld} onchange={handleDataChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1">
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3">
+                        <div>
+                            <p>Refine your numbers</p>
+                        </div>
+                        <hr>
+                        <div>
+                            <lightning-accordion  active-section-name="deductions">
+                                <lightning-accordion-section name="deductions" label="Deductions">                            
+                                    <p>Your standard deduction : <lightning-formatted-number value={sDeductionValue} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></p>
+                                    <lightning-radio-group name="Deductions"
+                                                        label="Deductions"
+                                                        options={dedOptions}
+                                                        value={dedOptionValue}
+                                                        onchange={handleDataChange}
+                                                        type="radio"></lightning-radio-group>
+                                    <template lwc:if={itemized}>
+                                        <lightning-input label="ItemizedDeduction" placeholder="$0" type="number" formatter="currency" variant="standard" value={itemizedDeductions} onchange={handleDataChange}></lightning-input>
+                                    </template>
+                                </lightning-accordion-section>
+                            </lightning-accordion>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-card>
+    </div>    
+    </lightning-modal-body>
+</template>
